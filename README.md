@@ -24,14 +24,14 @@ Web API：RESTful API 介面 ----> api_server.py
 
 # 安裝
 cd taskmaster
-uv 安裝套件
+uv sync   # 安裝 pyproject.toml 中列出的所有套件
 
 # 使用
 **桌面介面**
-python main.py gui
+uv run python main.py gui
 
 **Web API 服務**
-python main.py api
+uv run python main.py api
 
 **技術架構**
 語言：Python 3.10+

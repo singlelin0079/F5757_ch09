@@ -166,17 +166,84 @@ def api_delete_task(task_id):
     delete_task(task_id)
     return "DELETED" 
 
+@app.get("/")
+def api_docs():
+    # 極簡 API 介面（純 HTML + 一點 JS）
+    return """
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TaskMaster API</title></head>
+<body>
+  <h1>TaskMaster API (超級陽春介面)</h1>
+  <p>
+    <a href="/api/tasks" target="_blank">GET /api/tasks</a><br>
+    POST /api/tasks（下方表單）<br>
+    DELETE /api/tasks/&lt;id&gt;（自行用 curl/工具測）
+  </p>
+
+  <hr>
+  <h2>POST /api/tasks</h2>
+  <form id="taskForm">
+    <label>title: <input name="title" required></label><br>
+    <label>description: <input name="description"></label><br>
+    <label>priority: 
+      <select name="priority">
+        <option>low</option>
+        <option>medium</option>
+        <option>high</option>
+      </select>
+    </label><br>
+    <button type="submit">新增任務</button>
+  </form>
+  <pre id="postResult" style="background:#f5f5f5; padding:8px;"></pre>
+
+  <hr>
+  <h2>GET /api/tasks</h2>
+  <button id="btnLoad">載入所有任務</button>
+  <pre id="getResult" style="background:#f5f5f5; padding:8px;"></pre>
+
+  <script>
+  const postResult = document.getElementById('postResult');
+  const getResult = document.getElementById('getResult');
+
+  document.getElementById('taskForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const payload = {
+      title: fd.get('title'),
+      description: fd.get('description'),
+      priority: fd.get('priority') || 'low'
+    };
+    try {
+      const r = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json().catch(()=>({raw: '非 JSON 回應'}));
+      postResult.textContent = JSON.stringify(data, null, 2);
+    } catch (err) {
+      postResult.textContent = String(err);
+    }
+  });
+
+  document.getElementById('btnLoad').addEventListener('click', async () => {
+    try {
+      const r = await fetch('/api/tasks');
+      const data = await r.json().catch(()=>({raw: '非 JSON 回應'}));
+      getResult.textContent = JSON.stringify(data, null, 2);
+    } catch (err) {
+      getResult.textContent = String(err);
+    }
+  });
+  </script>
+</body>
+</html>
+""", 200, {"Content-Type": "text/html; charset=utf-8"}
+
+
 def run_flask():
     app.run(debug=False, port=5000, host='0.0.0.0')  # Security risk!
-
-def backup_database():
-    # 實作不良的備份功能
-    import shutil
-    try:
-        shutil.copy('tasks.db', 'backup_tasks.db')
-        print("Backup created")
-    except:
-        print("Backup failed")
 
 
 if __name__ == "__main__":
@@ -190,7 +257,6 @@ if __name__ == "__main__":
             gui.run()
         elif sys.argv[1] == "api":
             run_flask()
-        elif sys.argv[1] == "backup":
-            backup_database()
+
     else:
-        print("Usage: python main.py [gui|api|backup]")
+        print("Usage: python main.py [gui|api]")
