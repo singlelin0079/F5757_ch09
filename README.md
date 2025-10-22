@@ -43,19 +43,26 @@
 ```bash
 cd taskmaster
 uv sync   # 安裝 pyproject.toml 中列出的所有套件
-▶️ 使用方式
-桌面介面
-bash
-複製程式碼
+```
+
+## ▶️ 使用方式
+
+#### 🖥️ 桌面介面
+```bash
 uv run python main.py gui
-Web API 服務
-bash
-複製程式碼
+```
+
+#### 🌐 Web API 服務
+```bash
 uv run python main.py api
-🏗️ 技術架構
-元件	技術
-語言	Python 3.10+
-GUI	Tkinter
-Web 框架	Flask
-資料庫	SQLite
-API	RESTful JSON
+```
+
+## 🏗️ 技術架構
+
+| 元件 | 技術 |
+|------|------|
+| 語言 | Python 3.10+ |
+| GUI | Tkinter |
+| Web | 框架	Flask |
+| 資料庫 | SQLite |
+| API	| RESTful JSON |
