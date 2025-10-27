@@ -61,7 +61,7 @@ uv run python main.py api
 
 | 元件 | 技術 |
 |------|------|
-| 語言 | Python 3.10+ |
+| 語言 | Python 3.11+ |
 | GUI | Tkinter |
 | Web | 框架	Flask |
 | 資料庫 | SQLite |
