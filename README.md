@@ -66,3 +66,18 @@ uv run python main.py api
 | Web | 框架	Flask |
 | 資料庫 | SQLite |
 | API	| RESTful JSON |
+
+---
+
+## 📄 授權
+
+本專案僅供學習與練習使用。
+
+---
+
+## 🔗 相關連結
+
+- [Python 官方文件](https://docs.python.org/3/)
+- [Flask 文件](https://flask.palletsprojects.com/)
+- [Tkinter 教學](https://docs.python.org/3/library/tkinter.html)
+
